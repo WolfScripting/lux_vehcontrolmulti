@@ -143,6 +143,36 @@ function usePowercallAuxSrn(veh)
 	end
 	return false
 end
+---------------------------------------------------------------------LSPD
+function useLSPDSrn(veh)
+	local model = GetEntityModel(veh)
+	for i = 1, #eModelsWithLSPDSrn, 1 do
+		if model == GetHashKey(eModelsWithLSPDSrn[i]) then
+			return true
+		end
+	end
+	return false
+end
+---------------------------------------------------------------------BCSO
+function useBCSOSrn(veh)
+	local model = GetEntityModel(veh)
+	for i = 1, #eModelsWithBCSOSrn, 1 do
+		if model == GetHashKey(eModelsWithBCSOSrn[i]) then
+			return true
+		end
+	end
+	return false
+end
+---------------------------------------------------------------------FIB
+function useFIBSrn(veh)
+	local model = GetEntityModel(veh)
+	for i = 1, #eModelsWithFIBSrn, 1 do
+		if model == GetHashKey(eModelsWithFIBSrn[i]) then
+			return true
+		end
+	end
+	return false
+end
 
 ---------------------------------------------------------------------
 function CleanupSounds()
@@ -230,6 +260,18 @@ function SetLxSirenStateForVeh(veh, newstate)
 			if newstate == 1 then
 				if useFiretruckSiren(veh) then
 					TogMuteDfltSrnForVeh(veh, false)
+				elseif useLSPDSrn(veh) then
+				        snd_lxsiren[veh] = GetSoundId()	
+					PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_SIREN_1", veh, 0, 0, 0)
+					TogMuteDfltSrnForVeh(veh, true)
+				elseif useBCSOSrn(veh) then
+				        snd_lxsiren[veh] = GetSoundId()	
+					PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_SIREN_1", veh, 0, 0, 0)
+					TogMuteDfltSrnForVeh(veh, true)
+				elseif useFIBSrn(veh) then
+				        snd_lxsiren[veh] = GetSoundId()	
+					PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_SIREN_1", veh, 0, 0, 0)
+					TogMuteDfltSrnForVeh(veh, true)
 				else
 					snd_lxsiren[veh] = GetSoundId()	
 					PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_SIREN_1", veh, 0, 0, 0)
@@ -237,14 +279,30 @@ function SetLxSirenStateForVeh(veh, newstate)
 				end
 				
 			elseif newstate == 2 then
-				snd_lxsiren[veh] = GetSoundId()
-				PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_SIREN_2", veh, 0, 0, 0)
-				TogMuteDfltSrnForVeh(veh, true)
+				if useLSPDSrn(veh) then
+				   snd_lxsiren[veh] = GetSoundId()
+				   PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_SIREN_2", veh, 0, 0, 0)
+				   TogMuteDfltSrnForVeh(veh, true)
+				elseif useBCSOSrn(veh) then
+				   snd_lxsiren[veh] = GetSoundId()
+				   PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_SIREN_2", veh, 0, 0, 0)
+				   TogMuteDfltSrnForVeh(veh, true)
+				elseif useFIBSrn(veh) then
+				   snd_lxsiren[veh] = GetSoundId()
+				   PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_SIREN_2", veh, 0, 0, 0)
+				   TogMuteDfltSrnForVeh(veh, true)
+				end
 			
 			elseif newstate == 3 then
 				snd_lxsiren[veh] = GetSoundId()
 				if useFiretruckSiren(veh) then
 					PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_AMBULANCE_WARNING", veh, 0, 0, 0)
+				elseif useLSPDSrn(veh) then
+					PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_POLICE_WARNING", veh, 0, 0, 0)
+				elseif useBCSOSrn(veh) then
+					PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_POLICE_WARNING", veh, 0, 0, 0)
+				elseif useFIBSrn(veh) then
+					PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_POLICE_WARNING", veh, 0, 0, 0)
 				else
 					PlaySoundFromEntity(snd_lxsiren[veh], "VEHICLES_HORNS_POLICE_WARNING", veh, 0, 0, 0)
 				end
@@ -268,6 +326,12 @@ function TogPowercallStateForVeh(veh, toggle)
 				snd_pwrcall[veh] = GetSoundId()
 				if usePowercallAuxSrn(veh) then
 					PlaySoundFromEntity(snd_pwrcall[veh], "VEHICLES_HORNS_AMBULANCE_WARNING", veh, 0, 0, 0)
+				elseif useLSPDSrn(veh) then
+					PlaySoundFromEntity(snd_pwrcall[veh], "VEHICLES_HORNS_SIREN_1", veh, 0, 0, 0)
+				elseif useBCSOSrn(veh) then
+					PlaySoundFromEntity(snd_pwrcall[veh], "VEHICLES_HORNS_SIREN_1", veh, 0, 0, 0)
+				elseif useFIBSrn(veh) then
+					PlaySoundFromEntity(snd_pwrcall[veh], "VEHICLES_HORNS_SIREN_1", veh, 0, 0, 0)
 				else
 					PlaySoundFromEntity(snd_pwrcall[veh], "VEHICLES_HORNS_SIREN_1", veh, 0, 0, 0)
 				end
@@ -298,6 +362,12 @@ function SetAirManuStateForVeh(veh, newstate)
 				snd_airmanu[veh] = GetSoundId()
 				if useFiretruckSiren(veh) then
 					PlaySoundFromEntity(snd_airmanu[veh], "VEHICLES_HORNS_FIRETRUCK_WARNING", veh, 0, 0, 0)
+				elseif useLSPDSrn(veh) then
+					PlaySoundFromEntity(snd_airmanu[veh], "SIRENS_AIRHORN", veh, 0, 0, 0)
+				elseif useBCSOSrn(veh) then
+					PlaySoundFromEntity(snd_airmanu[veh], "SIRENS_AIRHORN", veh, 0, 0, 0)
+				elseif useFIBSrn(veh) then
+					PlaySoundFromEntity(snd_airmanu[veh], "SIRENS_AIRHORN", veh, 0, 0, 0)
 				else
 					PlaySoundFromEntity(snd_airmanu[veh], "SIRENS_AIRHORN", veh, 0, 0, 0)
 				end
