@@ -55,6 +55,7 @@ RequestScriptAudioBank("DLC_SERVERSIDEAUDIO\\OISS_SSA_VEHAUD_SAMS_OLD", false)
 RequestScriptAudioBank("DLC_SERVERSIDEAUDIO\\OISS_SSA_VEHAUD_USFS_NEW", false)
 RequestScriptAudioBank("DLC_SERVERSIDEAUDIO\\OISS_SSA_VEHAUD_USFS_OLD", false)
 RequestScriptAudioBank("DLC_SERVERSIDEAUDIO\\OISS_SSA_VEHAUD_ETC", false)
+---------------------------------------------------------------------
 
 local count_bcast_timer = 0
 local delay_bcast_timer = 200
@@ -99,6 +100,20 @@ local eModelsWithPcall =
 	"LGUARD",
 }
 
+local eModelsWithLSPDSrn =
+{
+	"police",
+}
+
+local eModelsWithBCSOSrn =
+{
+	"sheriff",
+}
+
+local eModelsWithFIBSrn =
+{
+	"fbi2",
+}
 
 ---------------------------------------------------------------------
 function ShowDebug(text)
